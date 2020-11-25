@@ -42,7 +42,7 @@ Door omstandigheid ben ik nog niet aan het coderen toegekomen. Wel heb ik een pl
 
 **Screenshot(s):**
 
-<img src="images/website.png" width="375px" alt="website schets">
+<img src="/basiswebsite/images/schets.png" width="375px" alt="website schets">
 
 ### Agenda voor meeting
 
