@@ -49,10 +49,10 @@ Door omstandigheid ben ik nog niet aan het coderen toegekomen. Wel heb ik een pl
 -samen met je groepje opstellen-
 
 | student 1      | student 2          | student 3    | student 4        |
-| hamburgermenu  | ---                | ---          | ---              |
-| postionering van elementen | hamburgermenu      | en ik dit    | en dan ik dat    |
-| kruisjes om feedback af te sluiten       |                    | nog een punt | dit wil ik zeker |
-| ...            | ...                | ...          | ...              |
+| hamburger menu  | ---                | ---          | ---              |
+| postionering   | hamburger menu      | hamburger menu    | en dan ik dat    |
+| van elementen  |                    | positioneren | dit wil ik zeker |
+| kruisjes om feedback af te sluiten            | ...                | ...          | ...              |
 
 ### Verslag van meeting
 
