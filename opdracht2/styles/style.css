@@ -1,155 +1,335 @@
-/* Simpele CSS Remedy - naar een idee van Jen Simmons */
-/* https://github.com/jensimmons/cssremedy */
 *, *::after, *::before {
-  box-sizing:border-box;
-}
-
-button:not([disabled]), summary {
-    cursor:pointer;
-}
-
-
-
-
-/*********************/
-/* CUSTOM PROPERTIES */
-/*********************/
-:root {
-  --color-main:#333;
-  --color-background:#ccc;
-
-    --color-list-background:#fff;
-}
-
-
-
-
-
-/********************/
-/* ALGEMENE STIJLEN */
-/********************/
-body {
-  margin:0;
-    padding:1em;
-
-    display:grid;
-/*    gap:1em;*/
-  background-color:var(--color-background);
-  font-family:'Saira', sans-serif;
-  color:var(--color-main);
-}
-
-
-
-
-
-/***********/
-/* LIJSTEN */
-/***********/
-ul {
-    position:relative;
-
-    height:16em;
-    margin:0;
-    padding:1em;
-
-    display:flex;
-/*
-    gap:1em;
-    overflow-x:scroll;
-    scroll-snap-type:x mandatory;
-    overscroll-behavior-x: contain;
-    scroll-behavior: smooth;
-*/
-
-    list-style:none;
-    background-color:var(--color-list-background);
-}
-
-ul:empty::after {
-    content:"sleep je favo foto's naar dit lijstje (of gebruik de knopjes → boring!)";
-    position:absolute;
-    left:50%;
-    top:50%;
-    transform:translate(-50%, -50%);
-    max-width:16em;
-    text-align:center;
-}
-
-/* een item in een lijst */
-li {
-    position:relative;
-/*    aspect-ratio:1/1;*/
-    flex-shrink:0;
-/*    scroll-snap-align:center;*/
-
-    /* voor de affordance */
-    cursor:grab;
-}
-
-li img {
-    width:100%;
-}
-
-li button {
-    position:absolute;
-    top:.5rem;
-    right:.5rem;
-    width:3rem;
-    height:3rem;
-    border:none;
-    border-radius:.5rem;
-    font-size:1.5em;
-
-    transition:.1s;
-}
-
-li button::after {
-    content:"💙";
-}
-
-li button:hover {
-    font-size:2em;
-}
-
-li button:hover::after {
-    content:"💚";
-}
-
-li button:focus {
-    font-size:2em;
-    outline:none;
-    text-shadow:
-        0 0 .25em deeppink,
-        0 0 .25em deeppink,
-        0 0 .25em deeppink,
-        0 0 .25em deeppink,
-        0 0 .25em deeppink;
-}
-
-
-li button:active {
-    transform:translatey(.1em);
-}
-
-/* knop in favo lijst */
-ul:first-of-type li button::after {
-    content:"💩";
-}
-
-
-
-
-
-/*******************/
-/* TIJDENS DRAGGEN */
-/*******************/
-
-body.dragging,
-body.dragging * {
-    cursor:grabbing;
-}
-
-li.sortable-fallback button {
-    display:none;
-}
+    box-sizing:border-box;  
+  }
+  
+  /*********************/
+  /* CUSTOM PROPERTIES */
+  /*********************/
+  /* light mode */
+  :root {
+    --color-font:#333;
+    --color-background:#ccc;
+      
+      --color-eten:red;
+      --color-zwemmen:midnightblue;
+      
+      --color-liked-background:skyblue;
+      --color-vissen-wissen: white;
+  }
+  
+  /* dark mode */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /* dark theme */
+          --color-font: white;
+          --color-background: grey;
+      
+      --color-eten: orangered;
+          --color-zwemmen: green;
+          
+        --color-liked-background: midnightblue;
+    }
+  }
+  
+  /************/
+  /*   MAIN   */
+  /************/
+  html {
+      height:100%;
+  }
+  
+  body {
+      height:100%;
+      max-height:100%;
+      margin:0;
+      overflow:hidden;
+      
+    /* de vissen lijst */
+      display:grid;
+      grid-template-rows:minmax(25em, 50%) 1fr;
+      
+      background-color:var(--color-background);
+    font-family:'Saira', sans-serif;
+    color:var(--color-font);
+  }
+  
+  h1 {
+      margin:0;
+      font-size:2em;
+      text-align:center;
+  }
+  
+  p {
+      font-size: 1.7em;
+  }
+  
+  
+  /**********/
+  /* KAARTEN */
+  /**********/
+  section.kaarten {
+      position:relative;
+      padding:1em;
+      
+      display:grid;
+      grid-template-rows:min-content min-content 1fr;
+      align-content:start;
+  }
+  
+  /* eten en zwemmen hints */
+  .kaarten::before,
+  .kaarten::after {
+      position:absolute;
+      display:grid;
+  }
+  
+  .kaarten::before {
+      content:"🍽";
+      inset:10em calc(100% - 2em) 5em -2em;
+      place-items:center end;
+      background-image:radial-gradient(circle at calc(-100% - 2em) center, var(--color-eten) 75%, transparent 90%);
+      
+  }
+  .kaarten::after {
+      content:"🌊";
+      inset:10em -2em 5em calc(100% - 2em);
+      place-items:center start;
+      background-image:radial-gradient(circle at calc(200% + 2em) center, var(--color-zwemmen) 75%, transparent 90%);
+  }
+  
+  /* instructie */
+  .kaarten p {
+      margin:0;
+      text-align:center;
+      
+      display:flex;
+      justify-content:center;
+  }
+  
+  .kaarten p span {
+      font-size:1.5em;
+      line-height:1em;
+  }
+  
+  
+  /********************/
+  /* KAARTEN - LIJSTJE */
+  /********************/
+  section.kaarten ul {
+      display:grid;
+      place-items:center;
+      
+      position:relative;
+      z-index:100;
+      height:90%;
+      place-self:center;
+      
+      margin:0;
+      padding:0;
+  }
+  
+  /* als er geen kaarten meer zijn */
+  section.kaarten ul::before {
+      content:"de vissen zijn op";
+  }
+  
+  
+  /*****************/
+  /* KAARTEN - VORM */
+  /*****************/
+  section.kaarten li {
+      font-size: 3em;
+  }
+  
+  section.kaarten ul li {
+      position:absolute;
+      height:100%;
+      aspect-ratio:3/4;
+      
+      display:grid;
+      place-items:center;
+      
+      background-color:var(--color-liked-background);
+      border-radius:0.5em;
+  }
+  
+  
+  /* eten vorm aan de linker kant*/
+  section.kaarten ul li.trash {
+      transform:
+          translatex(calc(-50vh - 40vmin)) 
+          scale(.85) 
+          rotate(-15deg);
+      background-color:var(--color-eten);
+  }
+  
+  /* naar de zee - zwemmen */
+  section.kaarten ul li.like {
+      transform:
+          translatex(calc(50vh + 40vmin)) 
+          scale(.85) 
+          rotate(15deg);
+      background-color:var(--color-zwemmen);
+  }
+  
+  
+  /***********/
+  /* ZWEMMEN */
+  /***********/
+  section.zwemmen {
+      padding:1em 0 0;
+      
+      display:flex;
+      flex-direction:column;
+      
+      background-color:var(--color-liked-background);
+  }
+  
+  
+  /*********************/
+  /* ZWEMMEN - LIJSTJE */
+  /*********************/
+  .zwemmen ul {
+      display: grid; 
+      place-items: center; 
+      flex-grow:1;
+      
+      margin:0;
+      padding:0;
+  }
+  
+  /* als er nog geen vissen zwemmen */
+  .zwemmen ul:empty::before {
+      content:"leeg → vul het aquarium!";
+      text-align:center;
+  }
+  
+  
+  
+  /****************/
+  /*    ZWEMMEN   */
+  /****************/
+  .zwemmen ul li {
+      display:flex;
+      place-items:center;
+      
+      position:absolute;
+      z-index: 100;
+      font-size: 2em;
+  }
+  
+  /* de verwijderen button */
+  .zwemmen ul li button {
+      position:absolute;
+      aspect-ratio:1/1;
+      padding:0 1em;
+      z-index: 1; 
+  
+      background-color:var(--color-zwemmen-card);
+      border:none;
+      border-radius:50%;
+      
+      font:inherit;
+      cursor:pointer;
+  }
+  
+  /* vissen verwijderen uit de zee - hover */
+  .zwemmen ul li button:hover {
+      place-items:center;
+      left: -1em;
+      
+      position:absolute;
+      border:solid .2em var(--color-vissen-wissen);
+      border-radius:1.5em;
+  }
+  
+  /* antimatie vissen zwemmen */
+  @keyframes HeenenWeer-animation { 
+      0% {
+          transform: translatey(var(--Y)); 
+          animation-timing-function: ease-out;
+      }
+      24.99% {
+          transform: translatey(var(--Y)) translatex(calc(-100vw - 1em));
+      }
+      25% {
+          transform: translatey(var(--Y)) translatex(calc(-100vw - 1em)) rotatey(180deg);
+          animation-timing-function: ease-in-out;
+      }
+      74.99% {
+          transform: translatey(var(--Y)) translatex(calc(100vw + 1em)) rotatey(180deg);
+      }
+      75% {
+          transform: translatey(var(--Y)) translatex(calc(100vw + 1em));
+          animation-timing-function: ease-in;
+      }
+      100% {
+          transform: translatey(var(--Y)); 
+      }
+  }
+  
+  section:nth-of-type(2) li {
+    animation-name:HeenenWeer-animation;
+    animation-iteration-count:infinite;
+  }
+  
+  /*  elke vis een aparte timing en hoogte geven */
+  section:nth-of-type(2) li:nth-of-type(1) {
+      animation-delay: -5s;
+      animation-duration: 25s;
+      --Y:-2em;
+  }
+  
+  section:nth-of-type(2) li:nth-of-type(2) {
+      animation-delay: -2s;
+      animation-duration: 24.6s;
+      --Y:1em;
+  }
+  
+  section:nth-of-type(2) li:nth-of-type(3) {
+      animation-delay: -22s;
+      animation-duration: 26s;
+      --Y:-1.5em; 
+  }
+  
+  section:nth-of-type(2) li:nth-of-type(4) {
+      animation-delay: -23s;
+      animation-duration: 25.8s;
+      --Y:-1.3em; 
+  }
+  
+  section:nth-of-type(2) li:nth-of-type(5) {
+      animation-delay: -1s;
+      animation-duration: 25s;
+      --Y:-1.6em; 
+  }
+  
+  section:nth-of-type(2) li:nth-of-type(6) {
+      animation-delay: -2.2s;
+      animation-duration: 25.3s;
+      --Y:1.1em; 
+  }
+  
+  section:nth-of-type(2) li:nth-of-type(7) {
+      animation-delay: -22.3s;
+      animation-duration: 24.8s;
+      --Y:0.8em; 
+  }
+  
+  section:nth-of-type(2) li:nth-of-type(8) {
+      animation-delay: -23.1s;
+      animation-duration: 25.6s;
+      --Y:3.3em; 
+  }
+  
+  section:nth-of-type(2) li:nth-of-type(9) {
+      animation-delay: -22.1s;
+      animation-duration: 25s;
+      --Y:2.3em; 
+  }
+  
+  section:nth-of-type(2) li:nth-of-type(10) {
+      animation-delay: -22.8s;
+      animation-duration: 25.8s;
+      --Y:0.5em; 
+  }
